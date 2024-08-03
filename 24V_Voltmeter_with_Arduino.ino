@@ -1,3 +1,6 @@
+//24V VOLTMETER WITH ARDUINO
+//by: Lucas Leonardo
+
 float val = 0.0, conv[300], ctr_vector[300];
 
 void setup(){
