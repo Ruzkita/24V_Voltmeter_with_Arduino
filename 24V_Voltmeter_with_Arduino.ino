@@ -1,7 +1,7 @@
 //24V VOLTMETER WITH ARDUINO
 //by: Lucas Leonardo
 
-float val = 0.0, conv[300], ctr_vector[300];
+float val = 0.0, conv[100], ctr_vector[100], ctr_vector2[100];
 
 void setup(){
 	Serial.begin(115200);    
@@ -9,7 +9,7 @@ void setup(){
 
 float get_voltage(){
   int j;
-  for (j = 0; j <= 299; j++){
+  for (j = 0; j <= 99; j++){
     val = analogRead(A0) - analogRead(A1);
     conv[j] = val/1023*24;
     //Serial.print(j); Serial.print(" "); Serial.println(conv[j])
@@ -17,34 +17,52 @@ float get_voltage(){
   }
 }
 
-float plot(float conv[300]){
-  float ctr = NULL;
-  int j ,k;
-  for (k = 0; k <= 299; k++){
-    for (j = 0; j <= 299; j++){
-      if (ctr == NULL && conv[j] != NULL){
-        ctr = conv[j];
+float plot(float conv[100]){
+  float control = NULL, plot1[100], plot2[100];
+  int i, j, control2 = 0;
+  for (i = 0; i <= 99; i++){
+    plot1[i] = NULL;
+    plot2[i] = NULL;
+  }
+ for (i = 0; i <= 99; i++){
+  if (conv[i] != NULL){
+    for (j = i; j <= 99; j++){
+      if (j == i){
+        control = conv[j];
       }
-      if (ctr > conv[j] && conv[j] != NULL){
-        ctr = conv[j];
+      if (control > conv[j]){
+        control = conv[j];
       }
     }
-    ctr_vector[k] = ctr;
-    for(j = 0; j <= 299; j++){
-      if(conv[j] != NULL && conv[j] == ctr){
+    for (j = 0; j <= 99; j++){
+      if (control == conv[j]){
         conv[j] = NULL;
-        j = 299;
+        control2++;
       }
     }
   }
+ }
+  for (j = 0; j <= 99; j++){
+    if (plot1[j] == NULL){
+      plot1[j] = control;
+      plot2[j] = control2;
+      j == 99;
+  }
+ }
+ for (i = 0; i <= 99; i++){
+  ctr_vector[i] = plot1[i];
+  ctr_vector2[i] = plot2[i];
+ }
 }
 
 void loop(){
   get_voltage();
   plot(conv);
   int i;
-  for (i = 0; i <= 299; i++){
-    Serial.println(ctr_vector[i]);
-    delay(10);
+  for (i = 0; i <= 99; i++){
+    if(ctr_vector[i] != NULL){
+      Serial.print(ctr_vector[i]); Serial.print(" "); Serial.println(ctr_vector2[i]);
+      delay(10);
+    }
   }
 }
