@@ -41,12 +41,12 @@ float plot(float conv[100]){
       }
     }
   }
- }
   for (j = 0; j <= 99; j++){
     if (plot1[j] == NULL){
       plot1[j] = control;
       plot2[j] = control2;
-      j == 99;
+      j == 100;
+   }
   }
  }
  for (i = 0; i <= 99; i++){
@@ -66,3 +66,4 @@ void loop(){
     }
   }
 }
+
