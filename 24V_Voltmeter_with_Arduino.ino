@@ -19,42 +19,42 @@ float get_voltage(){
 }
 
 float plot(float conv[100]){
-  float control = 0, plot1[100], plot2[100];
+  float control = 0.0, plot1[100], plot2[100];
   int i, j, control2 = 0;
   for (i = 0; i <= 99; i++){
     plot1[i] = 0;
     plot2[i] = 0;
   }
- for (i = 0; i <= 99; i++){
-  if (conv[i] != 0){
-    for (j = i; j <= 99; j++){
-      if (j == i){
-        control = conv[j];
+  for (i = 0; i <= 99; i++){
+    if (conv[i] != 0){
+      for (j = i; j <= 99; j++){
+        if (j == i){
+          control = conv[j];
+        }
+        if (control >= conv[j]){
+          control = conv[j];
+        }
       }
-      if (control >= conv[j]){
-        control = conv[j];
+      for (j = 0; j <= 99; j++){
+        if (control == conv[j]){
+          conv[j] = 0;
+          control2++;
+        }
       }
     }
     for (j = 0; j <= 99; j++){
-      if (control == conv[j]){
-        conv[j] = 0;
-        control2++;
+      if (plot1[j] == 0){
+        plot1[j] = control;
+        plot2[j] = control2;
+        j = 100;
+        control2 = 0;
       }
     }
-  }
-  for (j = 0; j <= 99; j++){
-    if (plot1[j] == 0){
-      plot1[j] = control;
-      plot2[j] = control2;
-      j = 100;
-      control2 = 0;
-   }
-  }
  }
- for (i = 0; i <= 99; i++){
+  for (i = 0; i <= 99; i++){
   ctr_vector[i] = plot1[i];
   ctr_vector2[i] = plot2[i];
- }
+  }
 }
 
 void loop(){
@@ -66,8 +66,10 @@ void loop(){
   plot(conv);
   for (i = 0; i <= 99; i++){
     if(ctr_vector[i] != 0 && ctr_vector2[i] != 0){
-      Serial.print(ctr_vector[i], 5); Serial.print(" "); Serial.println(ctr_vector2[i]);
+      Serial.print("O valor "); Serial.print(ctr_vector[i], 5); Serial.print(" apareceu "); Serial.print(ctr_vector2[i]); Serial.println(" vezes");
       delay(10);
     }
   }
+  delay(3000);
+  Serial.println();
 }
