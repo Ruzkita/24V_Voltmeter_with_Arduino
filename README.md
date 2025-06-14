@@ -1,2 +1,2 @@
 # 24V_Voltmeter_with_Arduino
-Electrical and Magnetics Measurements class project to make a 24V voltmeter using arduino 
+This is the final project of the Electrical and Magnetics Measurements class for the engineering course at the Federal Center of Technological Education (CEFET). It aims to develop a 24V voltmeter using Arduino as the main component. The intended maximum measurement error is expected to not exceed 1% of the real tension valor. The main objective is to motivate the student in the C++ language and its applications in the Arduino microcontroller, as well as their abilities in circuit development and project limitations, like the 1% maximum error.
